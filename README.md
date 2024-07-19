@@ -1,6 +1,6 @@
-# CPK Extractor
+# CPK Extract
 
-CPK Extractor is a simple wrapper program around CriFsV2Lib for simple extracting of individual files and directories.
+CPK Extract is a simple wrapper program around CriFsV2Lib for simple extracting of individual files and directories.
 
 ## Usage
 
