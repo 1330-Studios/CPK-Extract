@@ -4,11 +4,15 @@ using CriFsV2Lib.Definitions.Utilities;
 namespace CpkExtract;
 
 internal class Program {
+    internal static void PrintHelpMenu() {
+        Console.WriteLine("Usage: CpkExtract.exe <file-path> [output-directory]");
+        Console.WriteLine("  <file-path>          The path to the directory or file to search for .cpk files.");
+        Console.WriteLine("  [output-directory]   Optional. The directory where extracted files will be stored. Defaults to the same directory as the .cpk file.");
+    }
+
     internal static void Main(string[] args) {
         if (args.Length == 0 || args.Contains("--help") || args.Contains("-h")) {
-            Console.WriteLine("Usage: CpkExtract.exe <file-path> [output-directory]");
-            Console.WriteLine("  <file-path>          The path to the directory or file to search for .cpk files.");
-            Console.WriteLine("  [output-directory]   Optional. The directory where extracted files will be stored. Defaults to the same directory as the .cpk file.");
+            PrintHelpMenu();
             return;
         }
 
@@ -18,9 +22,7 @@ internal class Program {
         // If path is either directory or file path
         if (!(Directory.Exists(path) || File.Exists(path))) {
             Console.WriteLine($"Error: The specified path '{path}' does not exist.");
-            Console.WriteLine("Usage: CpkExtract.exe <file-path> [output-directory]");
-            Console.WriteLine("  <file-path>          The path to the directory or file to search for .cpk files.");
-            Console.WriteLine("  [output-directory]   Optional. The directory where extracted files will be stored. Defaults to the same directory as the .cpk file.");
+            PrintHelpMenu();
             return;
         }
 

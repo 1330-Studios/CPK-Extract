@@ -35,7 +35,7 @@ public class ExtractorContext(string outputDirectory) {
 
     public void LogErrors() {
         foreach (var failedFile in m_errors) {
-            Console.WriteLine($"File {Path.GetFileName(failedFile.Item1)} failed: {failedFile.Item2.Message}");
+            Console.WriteLine($"Error: File {Path.GetFileName(failedFile.Item1)} failed for reason {failedFile.Item2.Message}");
         }
     }
 }
