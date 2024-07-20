@@ -10,8 +10,6 @@ public class ExtractorContext(string outputDirectory) {
         try {
             var outDir = outputDirectory ?? Path.Join(Path.GetDirectoryName(file), $"{Path.GetFileName(file)}_unpacked");
 
-            Directory.CreateDirectory(outDir);
-
             using var mmf = MemoryMappedFile.CreateFromFile(file);
             using var accessor = mmf.CreateViewAccessor();
             var buffer = new byte[accessor.Capacity];
@@ -26,7 +24,8 @@ public class ExtractorContext(string outputDirectory) {
                 while (trimIndex > 0 && rented.Span[trimIndex] == 0x00)
                     trimIndex--;
 
-                File.WriteAllBytes(Path.Join(outDir, cpkFile.FileName), rented.Span[..(trimIndex + 1)].ToArray());
+                Directory.CreateDirectory(Path.Join(outDir, cpkFile.Directory));
+                File.WriteAllBytes(Path.Join(outDir, cpkFile.Directory, cpkFile.FileName), rented.Span[..(trimIndex + 1)].ToArray());
             }
         } catch (Exception e) {
             m_errors.Add((file, e));
@@ -35,7 +34,7 @@ public class ExtractorContext(string outputDirectory) {
 
     public void LogErrors() {
         foreach (var failedFile in m_errors) {
-            Console.WriteLine($"Error: File {Path.GetFileName(failedFile.Item1)} failed for reason {failedFile.Item2.Message}");
+            Console.WriteLine($"Error: File {Path.GetFileName(failedFile.Item1)} failed - {failedFile.Item2.Message}");
         }
     }
 }
